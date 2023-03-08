@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@400;600&display=swap');
+*{
+	/* aqui estamos retirando a margem e padding para todos os elementos da pagina. */
+    margin: 0;
+    padding: 0;
+	/*box-sizing: border-box;*/
+}
+
+:root{
+	--cor-zulclaro:#22D4FD;
+	--cor-preta:#000000;
+	--cor-branca:#F6F6F6;
+	--font-principal:'Krona One', sans-serif;
+	
+}
+
+
+body{
+    background-color: var(--cor-preta);
+    color: var(--cor-branca);
+
+     /* height:100vh;    definir que o body ocupe toda a tela.  */
+	box-sizing: border-box; /* garantir que todo o elemento filho não ultrapasse o tamanho do elemento pai. Exemplo: se definfirmos a largura da imagem pra ocupar 100% da tela e botar um padding, ela vai estourar o tamamho do body.  */
+}
+
+.titulo-destaque{
+    color: var(--cor-zulclaro);
+}
+
+.apresentacao{
+	/*usando o conceito de flexbox  usado para colocar o texto e uma imagem na mesma linha.. uma do lado da outra.  */
+	display:flex;
+	align-items:center;
+	justify-content: space-between;
+	padding:5% 15%;
+	gap:82px;
+	
+}
+	
+.apresentacao__conteudo{
+	width:50%;
+	display:flex;
+    flex-direction:column;
+	gap:40px; /*  definir o espacçamento entre as colunas e linhas */		
+}
+
+.apresentacao__imagem{
+	width:50%;
+}
+
+.apresentacao__conteudo__titulo{
+	/* A unidade de medida "rem" pega como base o tamanho padrão da fonte do root da pagina que é 16px. 
+	   Então se estamos querendo utilizar o tamanho 36px., logo esse valor em rem será: 36/16 = 2,25
+	*/
+	
+	font-size:2.25rem;
+	font-family:var(--font-principal);
+	
+}	
+
+.apresentacao__conteudo__paragrafo{
+	font-size:1.5rem;
+    font-family: 'Montserrat', sans-serif;
+	
+}	
+
+.apresentacao__links{
+	display:flex;  /* informar que estamos usando flex-box  */
+	flex-direction:column;  /* colocar os elementos na vertical  */
+	align-items:center; /*  centralizar na vertical */
+	gap:30px; /* espaçamento igual entre os elementos  */
+}
+
+.apresentacao__links__navegacao{
+  /*background-color: #22D4FD;*/
+  display:flex;
+  justify-content:center; /*  alinhar os elementos no centro da linha */
+  align-items:center; /* alinhar o nome e a imagem no centro.. exemplo: O nome "gitHub" ficar no meio da imagem  */
+  gap:16px;
+  width:50%;
+  text-align:center;
+  border-radius:8px;
+  font-weight:600; /* definir o peso da fonte Montserrat */
+  font-size:1.5rem;
+  padding:21.5px 0;
+  color:#F6F6F6;
+  border:2px solid var(--cor-zulclaro);
+   font-family: 'Montserrat', sans-serif;  
+  text-decoration:none; /* retirar o sublinhado do link   */
+  
+}
+
+.apresentacao__links__link:hover{
+	background-color: #272727;
+}
+
+.apresentacao__links__subTitulo{
+	font-family: var(--font-principal);
+	font-weight:400;
+	font-size:1.5rem;
+}
+	
+
+.rodape{
+	color:var(--cor-preta);
+	background-color: var(--cor-zulclaro);
+	 padding:24px; 
+	text-align:center;
+	font-family: 'Montserrat', sans-serif;  
+	font-size:1.5rem;
+	font-weight:400;
+	
+}
+	
+.cabecalho{
+	padding:2% 0% 0% 15% 
+}	
+	
+.cabecalho__menu{
+	display:flex;
+	gap:80px;
+}	
+.cabecalho__menu__link{
+	font-family: 'Montserrat', sans-serif;  
+	font-weight:600;
+	font-size:1.5rem;
+	color: var(--cor-zulclaro);
+	text-decoration:none;
+}	
+	
+@media(max-width:1200px){
+	.apresentacao{
+		flex-direction:column-reverse;  /*column-reverse - inverte a ordem dos elementos.  */
+		padding:5%;
+	}
+	.apresentacao__conteudo{
+		width:auto;
+	}
+	
+	.cabecalho{
+		padding:10%;
+	}
+	.cabecalho__menu{
+	   justify-content:center;
+     }	
+
+}	
