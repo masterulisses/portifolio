@@ -1,0 +1,11 @@
+# Tecnologias
+- Java8
+- Docker
+- Kafka
+- Debug container kafka
+- Swagger
+- Spring Boot
+- Bean Validation
+- Hibernate
+- Postgres
+- Lombok
