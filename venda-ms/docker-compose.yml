@@ -1,0 +1,59 @@
+version: '3'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - rede-ms
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: -1
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${host}:9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    networks:
+      - rede-ms
+  postgres:
+    image: postgres:9.3
+    ports:
+      - 5432:5432
+    networks:
+      - rede-ms
+    environment:
+      - POSTGRES_USER=${user_bd}
+      - POSTGRES_PASSWORD=${senha_bd}
+      - POSTGRES_DB=${nome_bd}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - spring.datasource.url=jdbc:postgresql://${host}:5432/${nome_bd}
+      - spring.datasource.password=${senha_bd}
+      - spring.datasource.username=${user_bd}
+      - spring.kafka.bootstrap-servers=${server_kafka}
+    ports:
+      - 8081:8081
+    networks:
+      - rede-ms
+    depends_on:
+      - zookeeper
+      - kafka
+      - postgres
+networks:
+  rede-ms:
+    driver: bridge
