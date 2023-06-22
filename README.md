@@ -5,12 +5,30 @@ Projeto foi criado com o objetivo de mostrar a dockerização de dois micro serv
 
 ### 📋 Pré-requisitos
 
+- Git
 - Apache Kafka
 - Docker
 
 ### 🔧 Instalação
 
 - git clone https://github.com/masterulisses/portifolio
+- Repositorio "produto-ms"
+    - Objetivo: Cadastrar os produtos para que seja vendido no micro serviço venda-ms
+    - Tem seu próprio banco de dados postgres.
+    - EndPoints:
+        - Consultar Produto por id: Consulta um produto pelo id
+        - Consultar Produto pela descricaoCurta: Consulta um produto pela descrição, e retorna o dado paginado.
+        - Incluir novo produto: Incluir um novo produto
+        - Alterar produto: Alterar um produto já cadastrado
+        - Excluir produto: Exclui um produto já cadastrado
+- Repositorio "venda-ms"
+    - Responsável por realizar a venda de produtos
+    - Tem seu próprio banco de dados postgres.
+    - EndPoints:
+        - Consultar Produto por id: Consulta um produto pelo id
+        - Consultar Produto pela descricaoCurta: Consulta um produto pela descrição, e retorna o dado paginado.
+        - Incluir nova venda de produto: Incluir uma nova venda de produtos para uma pessoa.
+        - Excluir venda de produto: Excluir uma venda já realizada.
 - Alterar variáveis no arquivo ../produto-ms/.env
    - host: Informar "localhost" se estiver usando mac ou linux, caso esteja usando linux via wsl informar o "ip" do linux. Comando para pegar o ip (ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
 )  
@@ -23,9 +41,9 @@ Projeto foi criado com o objetivo de mostrar a dockerização de dois micro serv
 
 ## ⚙️ Executando os testes 
 - Observação: Se estiver usando wsl, informar o ip do linux no lugar de localhost
-- Listar e testar os endpoints do micro serviço produto-ms
+- Listar e testar os endpoints do micro serviço produto-ms usando o swagger
   - http://localhost:8082/produto-ms/swagger-ui/index.html 
-- Listar e testar os endpoints do micro serviço venda-ms
+- Listar e testar os endpoints do micro serviço venda-ms usando o swagger
   - http://localhost:8081/venda-ms/swagger-ui/index.html
 - Como ver se a comunicação entre os micro serviços foi realizada.
    - Usar o endpoint "Incluir novo produto" do projeto produto-ms
