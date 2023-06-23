@@ -1,4 +1,4 @@
-# Dockerizar uma aplicação Spring Boot que utiliza Maven, Postgres e Kafka  
+# Dockerizar duas aplicações Spring Boot que utiliza Maven, Postgres e Kafka  
 
 Projeto foi criado com o objetivo de mostrar a dockerização de dois micro serviços Spring Boot e a comunicação entre eles utilizando o Apache Kafka.
 
@@ -6,12 +6,13 @@ Projeto foi criado com o objetivo de mostrar a dockerização de dois micro serv
 ### 📋 Pré-requisitos
 
 - Git
-- Apache Kafka
 - Docker
 
 ### 🔧 Instalação
 
 - git clone https://github.com/masterulisses/portifolio
+- cd /home/user/produto-ms
+- docker compose up --build
 - Repositorio "produto-ms"
     - Objetivo: Cadastrar os produtos para que seja vendido no micro serviço venda-ms
     - Tem seu próprio banco de dados postgres.
@@ -35,8 +36,6 @@ Projeto foi criado com o objetivo de mostrar a dockerização de dois micro serv
     - server_kafka: alterar "172.20.69.204" para o valor informado na variavel host.
     - dir_venda_ms: Informar o diretório do projeto venda-ms
       
-- cd /home/user/produto-ms
-- docker compose up --build
 
 
 ## ⚙️ Executando os testes 
@@ -62,9 +61,15 @@ Projeto foi criado com o objetivo de mostrar a dockerização de dois micro serv
 * Maven
 * Docker
 * Kafka
+* Postgres
 * Swagger
 * Bean Validation
 * Hibernate
-* Postgres
 * Lombok
 * Paginação em banco
+
+## ✒️ Autor
+
+- Ulisses Silva de Souza
+- masterulisses@gmail.com.br
+- 62-9 8155-3380
