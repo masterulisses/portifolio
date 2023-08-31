@@ -10,8 +10,9 @@ Projeto foi criado com o objetivo de mostrar a dockerização de dois micro serv
 
 ### 🔧 Instalação
 
+- cd /home/user
 - git clone https://github.com/masterulisses/portifolio
-- cd /home/user/produto-ms
+- cd /home/user/portifolio/produto-ms
 - docker compose up --build
 - Repositorio "produto-ms"
     - Objetivo: Cadastrar os produtos para que seja vendido no micro serviço venda-ms
@@ -31,10 +32,9 @@ Projeto foi criado com o objetivo de mostrar a dockerização de dois micro serv
         - Incluir nova venda de produto: Incluir uma nova venda de produtos para uma pessoa.
         - Excluir venda de produto: Excluir uma venda já realizada.
 - Alterar variáveis no arquivo ../produto-ms/.env
-   - host: Informar "localhost" se estiver usando mac ou linux, caso esteja usando linux via wsl informar o "ip" do linux. Comando para pegar o ip (ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-)  
-    - server_kafka: alterar "172.20.69.204" para o valor informado na variavel host.
-    - dir_venda_ms: Informar o diretório do projeto venda-ms
+   - host: Informar "localhost" se estiver usando mac ou linux, caso esteja usando linux via wsl informar o "ip" do linux. Comando para pegar o ip "(ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+)"  
+   - dir_venda_ms: Informar o diretório do projeto venda-ms
       
 
 
