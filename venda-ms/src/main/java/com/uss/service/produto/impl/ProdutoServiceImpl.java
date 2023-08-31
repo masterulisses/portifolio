@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Created by maste on 09/05/2023.
+ * Created by ulisses on 09/05/2023.
  */
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
@@ -44,20 +44,18 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 
     public ProdutoTO incluirAlterar(ProdutoTO produtoTO){
-        ProdutoEntity produtoEntity = this.produtoRepository.findByNsu(produtoTO.getId()).orElse(null);
-        if (produtoEntity != null){
-            alterarDados(produtoEntity,produtoTO);
-        }else{
-            produtoEntity = new ProdutoEntity(produtoTO);
-        }
+        ProdutoEntity produtoEntity = this.produtoRepository.findByNsu(produtoTO.getId())
+                .map((prodEntity) -> alterarDados(prodEntity,produtoTO))
+                .orElse(new ProdutoEntity(produtoTO));
         return new ProdutoTO(this.produtoRepository.save(produtoEntity));
     }
 
-    private void alterarDados(ProdutoEntity produtoEntity, ProdutoTO produtoTO){
+    private ProdutoEntity alterarDados(ProdutoEntity produtoEntity, ProdutoTO produtoTO){
         produtoEntity.setDescricaoCurta(produtoTO.getDescricaoCurta());
         produtoEntity.setDescricaoDetalhada(produtoTO.getDescricaoDetalhada());
         produtoEntity.setPathImagem(produtoTO.getPathImagem());
         alterarDadosVigencia(produtoEntity,produtoTO);
+        return produtoEntity;
     }
 
     private void alterarDadosVigencia(ProdutoEntity produtoEntity, ProdutoTO produtoTO){
@@ -73,22 +71,30 @@ public class ProdutoServiceImpl implements ProdutoService {
             produtoEntity.getVigencias().removeAll(produtoEntity.getVigencias().stream().filter(
                     produtoVigenciaEntity -> !produtoTO.getVigencias().contains(new ProdutoVigenciaTO(produtoVigenciaEntity))).collect(Collectors.toList()
             ));
-            // alterar/incluir vigência.
-            for(ProdutoVigenciaTO produtoVigenciaTO: produtoTO.getVigencias()){
-                boolean alterou= false;
-                for (ProdutoVigenciaEntity produtoVigenciaEntity: produtoEntity.getVigencias()){
-                    if ((produtoVigenciaEntity.getNsu() != null) &&  (produtoVigenciaTO.getId() != null) && produtoVigenciaEntity.getNsu().equals(produtoVigenciaTO.getId())){
-                        produtoVigenciaEntity.setValor(produtoVigenciaTO.getValor());
-                        produtoVigenciaEntity.setVigenciaInicial(produtoVigenciaTO.getVigenciaInicial());
-                        produtoVigenciaEntity.setVigenciaFinal(produtoVigenciaTO.getVigenciaFinal());
-                        alterou = true;
-                        break;
-                    }
-                }
-                if (!alterou){
-                    produtoEntity.getVigencias().add(new ProdutoVigenciaEntity(produtoEntity, produtoVigenciaTO));
-                }
-            }
+
+            // Incluir/Alterar vigencias.
+            produtoTO.getVigencias().forEach(produtoVigenciaTO -> {
+                produtoEntity.getVigencias().stream()
+                        .filter(produtoVigenciaEntity ->
+                                produtoVigenciaEntity.getId() != null &&
+                                        produtoVigenciaTO.getId() != null &&
+                                        produtoVigenciaEntity.getId().equals(produtoVigenciaTO.getId()))
+                        .findFirst()
+                        .map(produtoVigenciaEntity -> {
+                            // Alterar vigencia
+                            produtoVigenciaEntity.setValor(produtoVigenciaTO.getValor());
+                            produtoVigenciaEntity.setVigenciaInicial(produtoVigenciaTO.getVigenciaInicial());
+                            produtoVigenciaEntity.setVigenciaFinal(produtoVigenciaTO.getVigenciaFinal());
+                            return produtoVigenciaEntity;
+                        })
+                        .orElseGet(() -> {
+                            // incluir vigencia
+                            ProdutoVigenciaEntity produtoVigenciaEntity = new ProdutoVigenciaEntity(produtoEntity, produtoVigenciaTO);
+                            produtoEntity.getVigencias().add(produtoVigenciaEntity);
+                            return produtoVigenciaEntity;
+                        });
+            });
+
         }
     }
 

@@ -24,22 +24,21 @@ public class PessoaServiceImpl implements PessoaService {
 
     public PessoaEntity incluirAlterar(PessoaTO pessoaTO){
         pessoaTO.setCpf(Util.formatarCPF(pessoaTO.getCpf()));
-        PessoaEntity pessoaEntity = this.pessoaRepository.findByCpf(pessoaTO.getCpf()).orElse(null);
-        if (pessoaEntity == null){
-            pessoaEntity = new PessoaEntity(pessoaTO);
-        }else{
-            pessoaEntity.setNome(pessoaTO.getNome());
-            pessoaEntity.setCpf(pessoaTO.getCpf());
-            pessoaEntity.setDataNascimento(pessoaTO.getDataNascimento());
-            pessoaEntity.setEmail(pessoaTO.getEmail());
-            pessoaEntity.setCelular(pessoaTO.getCelular());
-            pessoaEntity.setEndereco(pessoaTO.getEndereco());
-            pessoaEntity.setComplemento(pessoaTO.getComplemento());
-            pessoaEntity.setNumero(pessoaTO.getNumero());
-            pessoaEntity.setBairro(pessoaTO.getBairro());
-            pessoaEntity.setCep(pessoaTO.getCep());
-            pessoaEntity.setDataNascimento(pessoaTO.getDataNascimento());
-        }
+        PessoaEntity pessoaEntity = this.pessoaRepository.findByCpf(pessoaTO.getCpf())
+                .map((pessoa) -> {
+                    pessoa.setNome(pessoaTO.getNome());
+                    pessoa.setCpf(pessoaTO.getCpf());
+                    pessoa.setDataNascimento(pessoaTO.getDataNascimento());
+                    pessoa.setEmail(pessoaTO.getEmail());
+                    pessoa.setCelular(pessoaTO.getCelular());
+                    pessoa.setEndereco(pessoaTO.getEndereco());
+                    pessoa.setComplemento(pessoaTO.getComplemento());
+                    pessoa.setNumero(pessoaTO.getNumero());
+                    pessoa.setBairro(pessoaTO.getBairro());
+                    pessoa.setCep(pessoaTO.getCep());
+                    pessoa.setDataNascimento(pessoaTO.getDataNascimento());
+                    return pessoa;})
+                 .orElse(new PessoaEntity(pessoaTO));
         return this.pessoaRepository.save(pessoaEntity);
 
     }
