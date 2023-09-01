@@ -36,33 +36,7 @@ class ProdutoMsApplicationTests {
 	}
 
 
-	@Test
-	public void testAdd() {
-		// Arrange
-		int a = 3;
-		int b = 5;
 
-		// Act
-		//int result = mathService.add(a, b);
-		int result = a + b;
-
-		// Assert
-		Assertions.assertEquals(8, result, "A soma está incorreta!");
-	}
-
-	@Test
-	public void testSub() {
-		// Arrange
-		int a = 3;
-		int b = 5;
-
-		// Act
-		//int result = mathService.add(a, b);
-		int result =b - a;
-
-		// Assert
-		Assertions.assertEquals(2, result, "A divsao está incorreta!");
-	}
 
 
 
